@@ -1,14 +1,8 @@
 <script>
 
-const apiURL =
-"https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO_1jKvgvLYfbzP501SuS-BP7pDhHs8TTdt9hhcMcDYBXng/exec";
+function loadAssets(data){
 
-async function loadAssets(){
-
-const res = await fetch(apiURL);
-const data = await res.json();
-
-const dropdown = document.getElementById("assetList");
+let dropdown = document.getElementById("assetList");
 
 dropdown.innerHTML="";
 
@@ -25,6 +19,6 @@ dropdown.appendChild(option);
 
 }
 
-loadAssets();
-
 </script>
+
+<script src="https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO_1jKvgvLYfbzP501SuS-BP7pDhHs8TTdt9hhcMcDYBXng/exec?callback=loadAssets"></script>
