@@ -47,8 +47,15 @@ background:#3f6aa8;
 color:white;
 border:none;
 padding:12px;
-margin-top:15px;
+margin-top:20px;
 cursor:pointer;
+width:100%;
+}
+
+.loading{
+color:#777;
+font-size:14px;
+margin-top:5px;
 }
 
 </style>
@@ -64,13 +71,20 @@ Create Work Order
 <div class="container">
 
 <label>Select Asset</label>
-<select id="assetList" onchange="showAsset()"></select>
+<select id="assetList" onchange="showAsset()">
+<option>Loading assets...</option>
+</select>
+
+<div class="loading" id="loadingText">Loading asset data...</div>
 
 <label>Asset Name</label>
 <input id="asset_name" readonly>
 
 <label>Location</label>
 <input id="location" readonly>
+
+<label>Manufacturer</label>
+<input id="manufacturer" readonly>
 
 <label>Model</label>
 <input id="model" readonly>
@@ -91,7 +105,7 @@ Create Work Order
 <option>High</option>
 </select>
 
-  <label>Owner</label>
+<label>Owner</label>
 <select id="owner">
 <option value="">-- Select Owner --</option>
 <option>MTN</option>
@@ -115,8 +129,15 @@ Create Work Order
 <label>Phone</label>
 <input id="phone">
 
-</div>
+<label>Photo 1</label>
+<input type="file" id="photo1" accept="image/*" capture="environment">
 
+<label>Photo 2</label>
+<input type="file" id="photo2" accept="image/*" capture="environment">
+
+<button onclick="submitWorkOrder()">Submit Work Order</button>
+
+</div>
 
 <script>
 
@@ -141,6 +162,8 @@ dropdown.appendChild(option);
 
 });
 
+document.getElementById("loadingText").style.display="none";
+
 showAsset();
 
 }
@@ -155,14 +178,38 @@ if(!asset) return;
 
 document.getElementById("asset_name").value = asset.assetName;
 document.getElementById("location").value = asset.location;
+document.getElementById("manufacturer").value = asset.manufacturer;
 document.getElementById("model").value = asset.model;
 document.getElementById("serial").value = asset.serial;
 document.getElementById("btu").value = asset.btu;
 
 }
 
-</script>
+function submitWorkOrder(){
 
+let data = {
+assetID: document.getElementById("assetList").value,
+assetName: document.getElementById("asset_name").value,
+location: document.getElementById("location").value,
+manufacturer: document.getElementById("manufacturer").value,
+model: document.getElementById("model").value,
+serial: document.getElementById("serial").value,
+btu: document.getElementById("btu").value,
+problem: document.getElementById("problem").value,
+priority: document.getElementById("priority").value,
+owner: document.getElementById("owner").value,
+ownerName: document.getElementById("owner_name").value,
+email: document.getElementById("email").value,
+phone: document.getElementById("phone").value
+};
+
+console.log(data);
+
+alert("Work Order Ready (Next step connect to Google Sheet)");
+
+}
+
+</script>
 
 <script src="https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO_1jKvgvLYfbzP501SuS-BP7pDhHs8TTdt9hhcMcDYBXng/exec?callback=loadAssets"></script>
 
