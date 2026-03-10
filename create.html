@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,6 +140,7 @@ Create Work Order
 
 </div>
 
+
 <script>
 
 let assetData = [];
@@ -168,6 +170,7 @@ showAsset();
 
 }
 
+
 function showAsset(){
 
 let id = document.getElementById("assetList").value;
@@ -185,9 +188,11 @@ document.getElementById("btu").value = asset.btu;
 
 }
 
-function submitWorkOrder(){
 
-let data = {
+async function submitWorkOrder(){
+
+const data = {
+
 assetID: document.getElementById("assetList").value,
 assetName: document.getElementById("asset_name").value,
 location: document.getElementById("location").value,
@@ -201,17 +206,35 @@ owner: document.getElementById("owner").value,
 ownerName: document.getElementById("owner_name").value,
 email: document.getElementById("email").value,
 phone: document.getElementById("phone").value
+
 };
 
-console.log(data);
+fetch("https://script.google.com/macros/s/AKfycbxzajdEUHNKKIIDmwOasQaaX_Qra8TMNSihDJO7Bu2a0XBajoD6hVQDZ5IQMI7OL96K/exec",{
 
-alert("Work Order Ready (Next step connect to Google Sheet)");
+method:"POST",
+body:JSON.stringify(data)
+
+})
+.then(res=>res.json())
+.then(res=>{
+
+alert("Work Order Created : "+res.wo);
+
+location.reload();
+
+})
+.catch(err=>{
+alert("Error sending data");
+console.log(err);
+});
 
 }
 
 </script>
 
+
 <script src="https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO_1jKvgvLYfbzP501SuS-BP7pDhHs8TTdt9hhcMcDYBXng/exec?callback=loadAssets"></script>
 
 </body>
 </html>
+```
