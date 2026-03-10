@@ -31,7 +31,7 @@ border-radius:10px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-select,textarea,button{
+select,input{
 width:100%;
 padding:10px;
 margin-top:10px;
@@ -39,11 +39,11 @@ border-radius:6px;
 border:1px solid #ccc;
 }
 
-button{
-background:#3f6aa8;
-color:white;
-border:none;
-cursor:pointer;
+.info{
+margin-top:10px;
+padding:10px;
+background:#f4f6fb;
+border-radius:6px;
 }
 
 </style>
@@ -60,22 +60,31 @@ Create Work Order
 
 <label>Select Asset</label>
 
-<select id="assetList">
+<select id="assetList" onchange="showAsset()">
 <option>Loading...</option>
 </select>
 
-<label>Problem Description</label>
+<div class="info">
 
-<textarea id="problem" rows="4"></textarea>
+<p><b>Asset Name:</b> <span id="asset_name"></span></p>
+<p><b>Location:</b> <span id="location"></span></p>
+<p><b>Manufacturer:</b> <span id="manufacturer"></span></p>
+<p><b>Model:</b> <span id="model"></span></p>
+<p><b>Serial:</b> <span id="serial"></span></p>
+<p><b>Cooling BTU:</b> <span id="btu"></span></p>
 
-<button onclick="submitWO()">Submit Work Order</button>
+</div>
 
 </div>
 
 
 <script>
 
+let assetData = [];
+
 function loadAssets(data){
+
+assetData = data;
 
 let dropdown = document.getElementById("assetList");
 
@@ -86,20 +95,31 @@ data.forEach(a => {
 let option = document.createElement("option");
 
 option.value = a.assetID;
-option.text = a.assetID + " - " + a.assetName;
+option.text = a.assetID;
 
 dropdown.appendChild(option);
 
 });
 
+showAsset();
+
 }
 
-function submitWO(){
 
-let asset = document.getElementById("assetList").value;
-let problem = document.getElementById("problem").value;
+function showAsset(){
 
-alert("WO Created\n\nAsset: "+asset+"\nProblem: "+problem);
+let id = document.getElementById("assetList").value;
+
+let asset = assetData.find(a => a.assetID == id);
+
+if(!asset) return;
+
+document.getElementById("asset_name").innerText = asset.assetName;
+document.getElementById("location").innerText = asset.location;
+document.getElementById("manufacturer").innerText = asset.manufacturer;
+document.getElementById("model").innerText = asset.model;
+document.getElementById("serial").innerText = asset.serial;
+document.getElementById("btu").innerText = asset.btu;
 
 }
 
