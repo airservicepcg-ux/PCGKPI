@@ -1,53 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMMS - Maintenance System</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>CMMS</title>
 
 <style>
 
 body{
-margin:0;
 font-family:Arial;
 background:#eef1f5;
+margin:0;
 }
 
 .header{
-background:#3a66a8;
+background:#3f6aa8;
 color:white;
 text-align:center;
 padding:18px;
 font-size:22px;
-font-weight:bold;
 }
 
-.menu-container{
-max-width:1050px;
-margin:50px auto;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:25px;
-padding:0 20px;
+.menu{
+display:flex;
+justify-content:center;
+margin-top:60px;
 }
 
-.menu-card{
+.card{
 background:white;
-border-radius:12px;
-padding:28px;
-text-align:center;
-box-shadow:0 6px 14px rgba(0,0,0,0.12);
+padding:25px 40px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 cursor:pointer;
-font-weight:600;
-color:#2c5aa0;
+font-size:18px;
 }
 
-.footer{
-text-align:center;
-margin-top:40px;
-font-size:13px;
-color:#666;
+.card:hover{
+background:#f4f6fa;
 }
 
 </style>
@@ -60,19 +51,12 @@ color:#666;
 🏭 CMMS – Maintenance System
 </div>
 
-<div class="menu-container">
+<div class="menu">
 
-<div class="menu-card">🔧 Create Work Order</div>
-<div class="menu-card">📋 Job Status</div>
-<div class="menu-card">🔧 Maintenance Execution</div>
-<div class="menu-card">⚙️ Asset Master</div>
-<div class="menu-card">📊 Dashboard KPI</div>
-<div class="menu-card">📁 Document Support</div>
-
+<div class="card" onclick="location.href='create.html'">
+🔧 Create Work Order
 </div>
 
-<div class="footer">
-CMMS | Powered by Google Sheets & Apps Script
 </div>
 
 </body>
