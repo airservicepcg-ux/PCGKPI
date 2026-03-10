@@ -5,47 +5,23 @@ const apiURL =
 
 async function loadAssets(){
 
-try{
-
-const response = await fetch(apiURL,{
-method:"GET",
-mode:"cors"
-});
-
-const data = await response.json();
+const res = await fetch(apiURL);
+const data = await res.json();
 
 const dropdown = document.getElementById("assetList");
 
 dropdown.innerHTML="";
 
-data.forEach(asset => {
+data.forEach(a => {
 
 let option = document.createElement("option");
 
-option.value = asset.assetID;
-option.text = asset.assetID + " - " + asset.assetName;
+option.value = a.assetID;
+option.text = a.assetID + " - " + a.assetName;
 
 dropdown.appendChild(option);
 
 });
-
-}catch(err){
-
-console.error(err);
-
-document.getElementById("assetList").innerHTML =
-"<option>Cannot load asset</option>";
-
-}
-
-}
-
-function submitWO(){
-
-let asset = document.getElementById("assetList").value;
-let problem = document.getElementById("problem").value;
-
-alert("WO Created\n\nAsset: "+asset+"\nProblem: "+problem);
 
 }
 
