@@ -3,7 +3,6 @@
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Create Work Order</title>
 
 <style>
@@ -31,7 +30,7 @@ border-radius:10px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-select,input{
+input,select,textarea{
 width:100%;
 padding:10px;
 margin-top:10px;
@@ -39,11 +38,17 @@ border-radius:6px;
 border:1px solid #ccc;
 }
 
-.info{
-margin-top:10px;
-padding:10px;
-background:#f4f6fb;
-border-radius:6px;
+textarea{
+height:80px;
+}
+
+button{
+background:#3f6aa8;
+color:white;
+border:none;
+padding:12px;
+margin-top:15px;
+cursor:pointer;
 }
 
 </style>
@@ -59,21 +64,44 @@ Create Work Order
 <div class="container">
 
 <label>Select Asset</label>
+<select id="assetList" onchange="showAsset()"></select>
 
-<select id="assetList" onchange="showAsset()">
-<option>Loading...</option>
+<label>Asset Name</label>
+<input id="asset_name" readonly>
+
+<label>Location</label>
+<input id="location" readonly>
+
+<label>Model</label>
+<input id="model" readonly>
+
+<label>Serial Number</label>
+<input id="serial" readonly>
+
+<label>Cooling BTU</label>
+<input id="btu" readonly>
+
+<label>Problem</label>
+<textarea id="problem"></textarea>
+
+<label>Priority</label>
+<select id="priority">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
 </select>
 
-<div class="info">
+<label>Owner</label>
+<input id="owner">
 
-<p><b>Asset Name:</b> <span id="asset_name"></span></p>
-<p><b>Location:</b> <span id="location"></span></p>
-<p><b>Manufacturer:</b> <span id="manufacturer"></span></p>
-<p><b>Model:</b> <span id="model"></span></p>
-<p><b>Serial:</b> <span id="serial"></span></p>
-<p><b>Cooling BTU:</b> <span id="btu"></span></p>
+<label>Owner Name</label>
+<input id="owner_name">
 
-</div>
+<label>Email</label>
+<input id="email">
+
+<label>Phone</label>
+<input id="phone">
 
 </div>
 
@@ -105,7 +133,6 @@ showAsset();
 
 }
 
-
 function showAsset(){
 
 let id = document.getElementById("assetList").value;
@@ -114,12 +141,11 @@ let asset = assetData.find(a => a.assetID == id);
 
 if(!asset) return;
 
-document.getElementById("asset_name").innerText = asset.assetName;
-document.getElementById("location").innerText = asset.location;
-document.getElementById("manufacturer").innerText = asset.manufacturer;
-document.getElementById("model").innerText = asset.model;
-document.getElementById("serial").innerText = asset.serial;
-document.getElementById("btu").innerText = asset.btu;
+document.getElementById("asset_name").value = asset.assetName;
+document.getElementById("location").value = asset.location;
+document.getElementById("model").value = asset.model;
+document.getElementById("serial").value = asset.serial;
+document.getElementById("btu").value = asset.btu;
 
 }
 
