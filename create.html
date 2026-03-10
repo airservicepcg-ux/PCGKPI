@@ -1,100 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Create Work Order</title>
-
-<style>
-
-body{
-font-family:Arial;
-background:#eef1f5;
-margin:0;
-}
-
-.header{
-background:#3f6aa8;
-color:white;
-text-align:center;
-padding:18px;
-font-size:20px;
-}
-
-.container{
-max-width:500px;
-margin:40px auto;
-background:white;
-padding:25px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-select,textarea,button{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
-button{
-background:#3f6aa8;
-color:white;
-border:none;
-cursor:pointer;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="header">
-Create Work Order
-</div>
-
-<div class="container">
-
-<label>Select Asset</label>
-
-<select id="assetList">
-<option>Loading...</option>
-</select>
-
-<label>Problem Description</label>
-
-<textarea id="problem" rows="4"></textarea>
-
-<button onclick="submitWO()">Submit Work Order</button>
-
-</div>
-
 <script>
 
-const apiURL = "https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO_1jKvgvLYfbzP501SuS-BP7pDhHs8TTdt9hhcMcDYBXng/exec";
+const apiURL =
+"https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO_1jKvgvLYfbzP501SuS-BP7pDhHs8TTdt9hhcMcDYBXng/exec";
 
 async function loadAssets(){
 
-let res = await fetch(apiURL);
-let data = await res.json();
+try{
 
-let dropdown = document.getElementById("assetList");
+const response = await fetch(apiURL,{
+method:"GET",
+mode:"cors"
+});
+
+const data = await response.json();
+
+const dropdown = document.getElementById("assetList");
 
 dropdown.innerHTML="";
 
-data.forEach(a => {
+data.forEach(asset => {
 
 let option = document.createElement("option");
 
-option.value = a.assetID;
-option.text = a.assetID + " - " + a.assetName;
+option.value = asset.assetID;
+option.text = asset.assetID + " - " + asset.assetName;
 
 dropdown.appendChild(option);
 
 });
+
+}catch(err){
+
+console.error(err);
+
+document.getElementById("assetList").innerHTML =
+"<option>Cannot load asset</option>";
+
+}
 
 }
 
@@ -103,13 +45,10 @@ function submitWO(){
 let asset = document.getElementById("assetList").value;
 let problem = document.getElementById("problem").value;
 
-alert("Work Order Created\n\nAsset: "+asset+"\nProblem: "+problem);
+alert("WO Created\n\nAsset: "+asset+"\nProblem: "+problem);
 
 }
 
 loadAssets();
 
 </script>
-
-</body>
-</html>
