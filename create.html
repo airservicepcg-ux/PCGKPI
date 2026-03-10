@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Create Work Order</title>
 
 <style>
 
 body{
-font-family: Arial, Helvetica, sans-serif;
+font-family:Arial;
 background:#eef1f5;
 margin:0;
 }
 
 .header{
-background:#3a66a8;
+background:#3f6aa8;
 color:white;
 text-align:center;
-padding:16px;
+padding:18px;
 font-size:20px;
-font-weight:bold;
 }
 
 .container{
@@ -30,45 +28,22 @@ margin:40px auto;
 background:white;
 padding:25px;
 border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.15);
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-label{
-display:block;
-margin-top:15px;
-font-weight:bold;
-}
-
-select,input,textarea{
+select,textarea,button{
 width:100%;
 padding:10px;
-margin-top:6px;
+margin-top:10px;
 border-radius:6px;
 border:1px solid #ccc;
-font-size:14px;
 }
 
 button{
-margin-top:20px;
-width:100%;
-padding:12px;
-border:none;
-background:#3a66a8;
+background:#3f6aa8;
 color:white;
-font-size:16px;
-border-radius:6px;
+border:none;
 cursor:pointer;
-}
-
-button:hover{
-background:#2e4f86;
-}
-
-.footer{
-text-align:center;
-margin-top:30px;
-font-size:13px;
-color:#777;
 }
 
 </style>
@@ -86,19 +61,15 @@ Create Work Order
 <label>Select Asset</label>
 
 <select id="assetList">
-<option>Loading Asset...</option>
+<option>Loading...</option>
 </select>
 
 <label>Problem Description</label>
 
-<textarea id="problem" rows="4" placeholder="Describe problem here"></textarea>
+<textarea id="problem" rows="4"></textarea>
 
 <button onclick="submitWO()">Submit Work Order</button>
 
-</div>
-
-<div class="footer">
-CMMS | Powered by Google Sheets
 </div>
 
 <script>
@@ -107,31 +78,23 @@ const apiURL = "https://script.google.com/macros/s/AKfycbwPXX3CoMZWwP_oVI_LZS1sO
 
 async function loadAssets(){
 
-try{
-
-let response = await fetch(apiURL);
-let data = await response.json();
+let res = await fetch(apiURL);
+let data = await res.json();
 
 let dropdown = document.getElementById("assetList");
 
 dropdown.innerHTML="";
 
-data.forEach(asset => {
+data.forEach(a => {
 
 let option = document.createElement("option");
 
-option.value = asset.assetID;
-option.text = asset.assetID + " - " + asset.assetName;
+option.value = a.assetID;
+option.text = a.assetID + " - " + a.assetName;
 
 dropdown.appendChild(option);
 
 });
-
-}catch(error){
-
-document.getElementById("assetList").innerHTML="<option>Error loading asset</option>";
-
-}
 
 }
 
@@ -139,11 +102,6 @@ function submitWO(){
 
 let asset = document.getElementById("assetList").value;
 let problem = document.getElementById("problem").value;
-
-if(problem==""){
-alert("Please enter problem description");
-return;
-}
 
 alert("Work Order Created\n\nAsset: "+asset+"\nProblem: "+problem);
 
